@@ -4,7 +4,10 @@ import { keys } from './src/config/keys';
 
 const app = new Hono();
 
-logger.info({ myvar: keys.MYVAR });
+if (!keys) {
+  logger.error('Invalid environment variables. Exiting application.');
+  process.exit(1);
+}
 
 app.use(httpLogger);
 
@@ -12,7 +15,11 @@ app.get('/', (c) => {
   return c.text('Hello, QRFlow!!');
 });
 
-export default {
+const appPort = keys.APP_PORT;
+
+logger.info(`Starting server on port ${appPort}...`);
+
+Bun.serve({
   fetch: app.fetch,
-  port: 4000,
-};
+  port: appPort,
+});
