@@ -1,0 +1,17 @@
+!.env.template
+.env*
+node_modules
+requirements.md
+
+
+bun.lock
+package-lock.json
+yarn.lock
+.pnp.cjs
+.pnp.js
+dist
+.DS_Store
+.vscode
+.idea
+*.log
+*.tsbuildinfo
