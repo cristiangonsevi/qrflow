@@ -1,4 +1,4 @@
-import { logger } from '../uilts/logger';
+import { logger } from '../utils/logger';
 import zod from 'zod';
 
 const validateEnv = zod.object({

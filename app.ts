@@ -1,6 +1,7 @@
 import { Hono } from 'hono';
-import { httpLogger, logger } from './src/uilts/logger';
+import { httpLogger, logger } from './src/utils/logger';
 import { keys } from './src/config/keys';
+import { extractClientInfo } from './src/middlewares/extractClientInfo ';
 
 const app = new Hono();
 
@@ -10,6 +11,7 @@ if (!keys) {
 }
 
 app.use(httpLogger);
+app.use(extractClientInfo);
 
 app.get('/', (c) => {
   return c.text('Hello, QRFlow!!');
