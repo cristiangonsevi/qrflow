@@ -15,7 +15,12 @@ const extractClientInfo: MiddlewareHandler = async (ctx, next) => {
   const method = ctx.req.method as 'GET' | 'POST' | 'PUT' | 'DELETE';
   const qrCodeId = parseQrIdFromPath(path, method);
 
-  logger.info(`Client IP: ${ip}, User-Agent: ${userAgent}, Path: ${path}, QR Code ID: ${qrCodeId}`);
+  logger.info({
+    msg: 'Client info extracted',
+    ip,
+    userAgent,
+    qrCodeId,
+  });
 
   await next();
 };
