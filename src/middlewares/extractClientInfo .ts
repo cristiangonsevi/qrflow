@@ -1,5 +1,7 @@
 import type { MiddlewareHandler } from 'hono';
 import { logger } from '../utils/logger';
+import { QR_ID_REGEX } from '../utils/constants';
+import { parseQrIdFromPath } from '../utils/qrUtils';
 
 const extractClientInfo: MiddlewareHandler = async (ctx, next) => {
   const ip =
@@ -9,7 +11,11 @@ const extractClientInfo: MiddlewareHandler = async (ctx, next) => {
     'unknown';
   const userAgent = ctx.req.header('User-Agent') || 'Unknown';
 
-  logger.info(`Client IP: ${ip}, User-Agent: ${userAgent}`);
+  const path = ctx.req.path;
+  const method = ctx.req.method as 'GET' | 'POST' | 'PUT' | 'DELETE';
+  const qrCodeId = parseQrIdFromPath(path, method);
+
+  logger.info(`Client IP: ${ip}, User-Agent: ${userAgent}, Path: ${path}, QR Code ID: ${qrCodeId}`);
 
   await next();
 };
