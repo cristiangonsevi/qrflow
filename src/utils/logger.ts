@@ -1,4 +1,5 @@
 import pino from 'pino';
+import { randomUUID } from 'crypto';
 
 const logger = pino({
   level: process.env.NODE_ENV === 'production' ? 'info' : 'debug',
@@ -14,7 +15,13 @@ const logger = pino({
 });
 
 const httpLogger = async (ctx: any, next: () => Promise<void>) => {
-  logger.info(`${ctx.req.method} ${ctx.req.url}`);
+  const requestId = randomUUID();
+  logger.info({
+    msg: 'Incoming request',
+    requestId,
+    method: ctx.req.method,
+    url: ctx.req.url,
+  });
   await next();
 };
 
