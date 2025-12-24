@@ -4,6 +4,7 @@ import zod from 'zod';
 const validateEnv = zod.object({
   MYVAR: zod.coerce.number().min(1, 'MYVAR is required'),
   APP_PORT: zod.coerce.number().default(4000),
+  REDIS_URL: zod.string().default('redis://localhost:6379'),
 });
 
 type Keys = zod.infer<typeof validateEnv>;
