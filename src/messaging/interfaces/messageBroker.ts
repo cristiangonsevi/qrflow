@@ -1,0 +1,5 @@
+export interface MessageBroker {
+  publish(event: string, data: any): Promise<void>;
+  subscribe(event: string, handler: (data: any) => void): Promise<void>;
+  close(): Promise<void>;
+}
